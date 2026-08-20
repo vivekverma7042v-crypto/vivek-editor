@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Vivek Editor | Video Editing</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,Helvetica,sans-serif;
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#050505;
+    color:#fff;
+    overflow-x:hidden;
+}
+
+/* Background Glow */
+body::before{
+    content:"";
+    position:fixed;
+    width:500px;
+    height:500px;
+    background:linear-gradient(45deg,#ff0055,#7b00ff);
+    filter:blur(150px);
+    opacity:.22;
+    top:-180px;
+    left:-180px;
+    z-index:-1;
+    animation:glow 8s infinite alternate;
+}
+
+@keyframes glow{
+    from{transform:translate(0,0);}
+    to{transform:translate(600px,400px);}
+}
+
+/* NAVBAR */
+nav{
+    position:fixed;
+    top:0;
+    width:100%;
+    padding:20px 8%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:rgba(0,0,0,.7);
+    backdrop-filter:blur(15px);
+    z-index:1000;
+}
+
+.logo{
+    font-size:25px;
+    font-weight:bold;
+}
+
+.logo span{
+    color:#ff0055;
+}
+
+nav ul{
+    display:flex;
+    gap:30px;
+    list-style:none;
+}
+
+nav ul li a{
+    color:white;
+    text-decoration:none;
+    transition:.3s;
+}
+
+nav ul li a:hover{
+    color:#ff0055;
+}
+
+.menu{
+    display:none;
+    font-size:28px;
+    cursor:pointer;
+}
+
+/* HERO */
+.hero{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:120px 20px 60px;
+}
+
+.hero-content{
+    max-width:900px;
+}
+
+.badge{
+    display:inline-block;
+    padding:9px 20px;
+    border:1px solid #ff0055;
+    border-radius:30px;
+    color:#ff4b82;
+    margin-bottom:25px;
+    animation:pulse 2s infinite;
+}
+
+@keyframes pulse{
+    50%{
+        box-shadow:0 0 25px #ff0055;
+    }
+}
+
+.hero h1{
+    font-size:clamp(55px,9vw,100px);
+    line-height:1;
+    margin-bottom:25px;
+}
+
+.hero h1 span{
+    color:#ff0055;
+}
+
+.hero p{
+    color:#aaa;
+    font-size:20px;
+    line-height:1.6;
+    margin-bottom:30px;
+}
+
+.btn{
+    display:inline-block;
+    padding:15px 30px;
+    margin:7px;
+    background:#ff0055;
+    color:#fff;
+    text-decoration:none;
+    border-radius:30px;
+    transition:.3s;
+    box-shadow:0 0 20px rgba(255,0,85,.25);
+}
+
+.btn:hover{
+    transform:translateY(-5px);
+    box-shadow:0 0 35px rgba(255,0,85,.7);
+}
+
+.btn2{
+    background:transparent;
+    border:1px solid #555;
+}
+
+/* SECTIONS */
+section{
+    padding:100px 8%;
+}
+
+.title{
+    text-align:center;
+    margin-bottom:55px;
+}
+
+.title h2{
+    font-size:45px;
+    margin-bottom:10px;
+}
+
+.title h2 span{
+    color:#ff0055;
+}
+
+.title p{
+    color:#888;
+}
+
+/* SERVICES */
+.services{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:25px;
+}
+
+.card{
+    padding:35px;
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.1);
+    border-radius:20px;
+    transition:.4s;
+}
+
+.card:hover{
+    transform:translateY(-12px);
+    border-color:#ff0055;
+    box-shadow:0 15px 40px rgba(255,0,85,.15);
+}
+
+.icon{
+    font-size:45px;
+    margin-bottom:20px;
+}
+
+.card h3{
+    font-size:24px;
+    margin-bottom:15px;
+}
+
+.card p{
+    color:#999;
+    line-height:1.7;
+}
+
+/* PROJECTS */
+.projects{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:25px;
+}
+
+.project{
+    height:280px;
+    border-radius:20px;
+    overflow:hidden;
+    position:relative;
+    background:linear-gradient(135deg,#111,#292929);
+    border:1px solid #222;
+    transition:.4s;
+}
+
+.project:hover{
+    transform:scale(1.03);
+    border-color:#ff0055;
+}
+
+.project::before{
+    content:"▶";
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    width:70px;
+    height:70px;
+    border-radius:50%;
+    background:#ff0055;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:25px;
+    z-index:2;
+}
+
+.project-info{
+    position:absolute;
+    bottom:0;
+    width:100%;
+    padding:25px;
+    background:linear-gradient(transparent,#000);
+}
+
+.project-info h3{
+    font-size:22px;
+    margin-bottom:5px;
+}
+
+.project-info p{
+    color:#aaa;
+}
+
+/* ABOUT */
+.about{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:40px;
+}
+
+.about-box{
+    background:rgba(255,255,255,.05);
+    padding:40px;
+    border-radius:25px;
+    border:1px solid #222;
+}
+
+.about-box h2{
+    font-size:40px;
+    margin-bottom:20px;
+}
+
+.about-box h2 span{
+    color:#ff0055;
+}
+
+.about-box p{
+    color:#aaa;
+    line-height:1.8;
+}
+
+/* SKILLS */
+.skill{
+    margin:22px 0;
+}
+
+.skill-top{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:8px;
+}
+
+.bar{
+    height:8px;
+    background:#222;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.bar span{
+    display:block;
+    height:100%;
+    background:#ff0055;
+    border-radius:20px;
+    animation:load 2s;
+}
+
+@keyframes load{
+    from{width:0;}
+}
+
+/* CONTACT */
+.contact{
+    text-align:center;
+}
+
+.contact-box{
+    max-width:750px;
+    margin:auto;
+    padding:50px 25px;
+    background:rgba(255,255,255,.05);
+    border-radius:25px;
+    border:1px solid #222;
+}
+
+.contact-box h2{
+    font-size:40px;
+    margin-bottom:15px;
+}
+
+.contact-box p{
+    color:#aaa;
+    margin:12px 0;
+}
+
+.phone{
+    font-size:24px !important;
+    color:white !important;
+    font-weight:bold;
+}
+
+/* SOCIAL */
+.social{
+    margin-top:25px;
+}
+
+/* FOOTER */
+footer{
+    padding:30px;
+    text-align:center;
+    color:#777;
+    border-top:1px solid #222;
+}
+
+footer span{
+    color:#ff0055;
+}
+
+/* MOBILE */
+@media(max-width:800px){
+
+    nav ul{
+        display:none;
+        position:absolute;
+        top:75px;
+        right:20px;
+        background:#111;
+        padding:25px;
+        border-radius:15px;
+        flex-direction:column;
+        width:200px;
+    }
+
+    nav ul.active{
+        display:flex;
+    }
+
+    .menu{
+        display:block;
+    }
+
+    .services,
+    .projects,
+    .about{
+        grid-template-columns:1fr;
+    }
+
+    section{
+        padding:80px 5%;
+    }
+
+    .hero h1{
+        font-size:55px;
+    }
+
+    .hero p{
+        font-size:17px;
+    }
+
+    .title h2{
+        font-size:36px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav>
+
+    <div class="logo">
+        Vivek<span>Editor</span>
+    </div>
+
+    <div class="menu" onclick="toggleMenu()">
+        ☰
+    </div>
+
+    <ul id="navLinks">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+
+</nav>
+
+
+<!-- HERO -->
+<section class="hero" id="home">
+
+    <div class="hero-content">
+
+        <div class="badge">
+            AVAILABLE FOR WORK
+        </div>
+
+        <h1>
+            I'm <span>Vivek</span><br>
+            Video Editor
+        </h1>
+
+        <p>
+            Cinematic Videos • Reels • Shorts •
+            Motion Graphics • Color Grading
+        </p>
+
+        <a href="#projects" class="btn">
+            🎬 View My Work
+        </a>
+
+        <a href="https://wa.me/919359805467?text=Hello%20Vivek%2C%20mujhe%20video%20editing%20karwani%20hai."
+           target="_blank"
+           class="btn">
+            💬 Hire Me
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- SERVICES -->
+<section id="services">
+
+    <div class="title">
+        <h2>My <span>Services</span></h2>
+        <p>Professional editing for your content</p>
+    </div>
+
+    <div class="services">
+
+        <div class="card">
+            <div class="icon">🎬</div>
+            <h3>Video Editing</h3>
+            <p>
+                Professional cinematic editing,
+                smooth cuts, transitions, effects
+                and storytelling.
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="icon">📱</div>
+            <h3>Reels & Shorts</h3>
+            <p>
+                Instagram Reels, YouTube Shorts
+                and engaging social media content.
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="icon">✨</div>
+            <h3>Motion Graphics</h3>
+            <p>
+                Creative text animations,
+                motion graphics and visual effects.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- PROJECTS -->
+<section id="projects">
+
+    <div class="title">
+        <h2>My <span>Projects</span></h2>
+        <p>Some of my creative work</p>
+    </div>
+
+    <div class="projects">
+
+        <div class="project">
+            <div class="project-info">
+                <h3>Cinematic Edit</h3>
+                <p>Color Grading • Effects</p>
+            </div>
+        </div>
+
+        <div class="project">
+            <div class="project-info">
+                <h3>Instagram Reel</h3>
+                <p>Fast Cuts • Motion Graphics</p>
+            </div>
+        </div>
+
+        <div class="project">
+            <div class="project-info">
+                <h3>YouTube Video</h3>
+                <p>Storytelling • Sound Design</p>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ABOUT -->
+<section id="about">
+
+    <div class="about">
+
+        <div class="about-box">
+
+            <h2>About <span>Vivek</span></h2>
+
+            <p>
+                Hello! I'm Vivek, a passionate video editor.
+                I love turning normal footage into cinematic
+                and engaging content.
+            </p>
+
+            <p style="margin-top:15px;">
+                I create YouTube videos, Instagram Reels,
+                Shorts and cinematic edits designed to
+                make your content stand out.
+            </p>
+
+        </div>
+
+
+        <div class="about-box">
+
+            <h2>My <span>Skills</span></h2>
+
+            <div class="skill">
+
+                <div class="skill-top">
+                    <span>Video Editing</span>
+                    <span>95%</span>
+                </div>
+
+                <div class="bar">
+                    <span style="width:95%"></span>
+                </div>
+
+            </div>
+
+
+            <div class="skill">
+
+                <div class="skill-top">
+                    <span>Color Grading</span>
+                    <span>90%</span>
+                </div>
+
+                <div class="bar">
+                    <span style="width:90%"></span>
+                </div>
+
+            </div>
+
+
+            <div class="skill">
+
+                <div class="skill-top">
+                    <span>Motion Graphics</span>
+                    <span>85%</span>
+                </div>
+
+                <div class="bar">
+                    <span style="width:85%"></span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- CONTACT -->
+<section id="contact">
+
+    <div class="contact">
+
+        <div class="title">
+            <h2>Let's <span>Work Together</span></h2>
+            <p>Have a video editing project?</p>
+        </div>
+
+        <div class="contact-box">
+
+            <h2>Contact Vivek</h2>
+
+            <p>
+                Video editing ke liye directly contact karein.
+            </p>
+
+            <p class="phone">
+                📞 9359805467
+            </p>
+
+            <div class="social">
+
+                <!-- WhatsApp -->
+                <a
+                    href="https://wa.me/919359805467?text=Hello%20Vivek%2C%20mujhe%20video%20editing%20karwani%20hai."
+                    target="_blank"
+                    class="btn">
+                    💬 WhatsApp Me
+                </a>
+
+                <!-- Instagram -->
+                <a
+                    href="https://www.instagram.com/editzvivekk/"
+                    target="_blank"
+                    class="btn btn2">
+                    📸 @editzvivekk
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+
+    © 2026 <span>Vivek Editor</span> |
+    All Rights Reserved.
+
+</footer>
+
+
+<script>
+
+function toggleMenu(){
+
+    document
+    .getElementById("navLinks")
+    .classList
+    .toggle("active");
+
+}
+
+</script>
+
+</body>
+</html>
